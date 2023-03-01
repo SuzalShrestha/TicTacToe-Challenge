@@ -14,15 +14,26 @@ class TTT {
     this.cursor = new Cursor(3, 3);
 
     // Initialize a 3x3 tic-tac-toe grid
-    Screen.initialize(3, 3);
+    Screen.initialize(3,3);
     Screen.setGridlines(true);
 
     // Replace this with real commands
     Screen.addCommand('w', 'cursor up', this.cursor.up);
-    Screen.addCommand('s', 'cursor up', this.cursor.down);
-    Screen.addCommand('d', 'cursor up', this.cursor.left);
-    Screen.addCommand('a', 'cursor up', this.cursor.right);
+    Screen.addCommand('s', 'cursor down', this.cursor.down);
+    Screen.addCommand('d', 'cursor left', this.cursor.left);
+    Screen.addCommand('a', 'cursor right', this.cursor.right);
     Screen.render();
+    
+
+     
+      Screen.setGrid(this.cursor.row,this.cursor.col,this.playerTurn);
+      Screen.setBackgroundColor(this.cursor.row,this.cursor.col,"yellow");
+      this.cursor.setBackgroundColor();
+      
+      Screen.render();
+      Screen.setGrid(this.cursor.row,this.cursor.col,this.playerTurn);
+    
+      
   }
 
   
@@ -59,14 +70,14 @@ class TTT {
   if(emptyCount===3){
     return false;
   }
-
   //Horizontal Win check
 
     for (let item of grid){
-      if(checkThreeSame(item)!==undefined){
-      if(checkThreeSame(item).indexOf("X")!==-1){
+      let bool=checkThreeSame(item);
+      if(bool!==undefined){
+      if(bool.indexOf("X")!==-1){
         return "X";
-      }else if(checkThreeSame(item).indexOf("O")!==-1){
+      }else if(bool.indexOf("O")!==-1){
         return "O";
       }
     }
@@ -84,10 +95,11 @@ class TTT {
       
     }
     for (let item of verticalGrid){
-      if(checkThreeSame(item)!==undefined){
-      if(checkThreeSame(item).indexOf("X")!==-1){
+      let bool=checkThreeSame(item);
+      if(bool!==undefined){
+      if(bool.indexOf("X")!==-1){
         return "X";
-      }else if(checkThreeSame(item).indexOf("O")!==-1){
+      }else if(bool.indexOf("O")!==-1){
         return "O";
       }
     }
