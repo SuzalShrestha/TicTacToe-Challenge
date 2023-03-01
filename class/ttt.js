@@ -18,49 +18,125 @@ class TTT {
     Screen.setGridlines(true);
 
     // Replace this with real commands
-    Screen.addCommand('t', 'test command (remove)', TTT.testCommand);
-
+    Screen.addCommand('w', 'cursor up', this.cursor.up);
+    Screen.addCommand('s', 'cursor up', this.cursor.down);
+    Screen.addCommand('d', 'cursor up', this.cursor.left);
+    Screen.addCommand('a', 'cursor up', this.cursor.right);
     Screen.render();
   }
 
-  // Remove this
-  static testCommand() {
-    console.log("TEST COMMAND");
-  }
+  
+ 
 
   static checkWin(grid) {
     // Return 'X' if player X wins
     // Return 'O' if player O wins
     // Return 'T' if the game is a tie
     // Return false if the game has not ended
-    let data=
-    {
-      x:"X",o:"O",space:" ",xcount:0,ocount:0,spaceCount:0
-    }
-    let updateDate=()=>{
-    for(let i=0;i<3;i++){
-      let first=grid[i];
-      first.forEach(element => {
-          if(element===data.x){
-            data.xcount+=1;
-          }else if(element===data.o){
-            data.ocount+=1;
-          }else{
-            data.spaceCount+=1;
-          }
-      });
-    }
-    }
-    updateDate();
-      if(data.spaceCount===9){
-        return false;
+  //reduce horizontally
+  //
+  //reduce vertically
+  //
+  let checkThreeSame=(arr)=>{
+    let reduced=arr.reduce(
+      function(accum,current){
+        if(accum===current){
+          return accum;
+        }
       }
-    if(data.ocount>=3 || data.xcount>=3){
-      
-    }
+    );
+    return reduced;
+  }
+  //empty check
 
+  let emptyCount=0;
+  for(let item of grid){
+    let space=checkThreeSame(item);
+    if(space===" "){
+      emptyCount++;
+    }
+  }
+  if(emptyCount===3){
+    return false;
   }
 
+  //Horizontal Win check
+
+    for (let item of grid){
+      if(checkThreeSame(item)!==undefined){
+      if(checkThreeSame(item).indexOf("X")!==-1){
+        return "X";
+      }else if(checkThreeSame(item).indexOf("O")!==-1){
+        return "O";
+      }
+    }
+      
+    }
+    //Vertical Win Check
+    
+    let verticalGrid=[];
+    for(let i=0;i<3;i++){
+      let arr=[];
+      for(let j=0;j<3;j++){
+        arr.push(grid[j][i]);
+      }
+      verticalGrid.push(arr);
+      
+    }
+    for (let item of verticalGrid){
+      if(checkThreeSame(item)!==undefined){
+      if(checkThreeSame(item).indexOf("X")!==-1){
+        return "X";
+      }else if(checkThreeSame(item).indexOf("O")!==-1){
+        return "O";
+      }
+    }
+      
+    }
+    
+    //diagonal wins
+        
+    
+      let array=[];
+      for(let i=0;i<3;i++){
+        array.push(grid[i][i]);
+      }
+      
+    
+      if(checkThreeSame(array)!==undefined){
+        if(checkThreeSame(array).indexOf("X")!==-1){
+          return "X";
+        }else if(checkThreeSame(array).indexOf("O")!==-1){
+          return "O";
+        }
+      }
+     let advanceGrid=grid.reverse();
+      array=[];
+      for(let i=0;i<3;i++){
+        array.push(advanceGrid[i][i]);
+      }
+      if(checkThreeSame(array)!==undefined){
+        if(checkThreeSame(array).indexOf("X")!==-1){
+          return "X";
+        }else if(checkThreeSame(array).indexOf("O")!==-1){
+          return "O";
+        }
+      }
+    
+    //ties
+    for(let item of grid){
+      if(item.indexOf(" ")!==-1){
+        return false;
+      }
+    }
+   return "T";
+    
+  }
+  
+
+
+ 
+ 
   static endGame(winner) {
     if (winner === 'O' || winner === 'X') {
       Screen.setMessage(`Player ${winner} wins!`);
