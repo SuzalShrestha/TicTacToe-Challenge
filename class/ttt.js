@@ -11,32 +11,43 @@ class TTT {
                  [' ',' ',' '],
                  [' ',' ',' ']]
 
-    this.cursor = new Cursor(3, 3);
+    this.cursor = new Cursor(3,3);
 
     // Initialize a 3x3 tic-tac-toe grid
     Screen.initialize(3,3);
     Screen.setGridlines(true);
-
+    this.cursor.setBackgroundColor();
     // Replace this with real commands
-    Screen.addCommand('w', 'cursor up', this.cursor.up);
-    Screen.addCommand('s', 'cursor down', this.cursor.down);
-    Screen.addCommand('d', 'cursor left', this.cursor.left);
-    Screen.addCommand('a', 'cursor right', this.cursor.right);
+    Screen.addCommand('up', 'cursor up', this.cursor.up.bind(this.cursor));
+    Screen.addCommand('down', 'cursor down', this.cursor.down.bind(this.cursor));
+    Screen.addCommand('left', 'cursor left', this.cursor.left.bind(this.cursor));
+    Screen.addCommand('right', 'cursor right', this.cursor.right.bind(this.cursor));
+    Screen.addCommand('return', 'place move', this.placeMove.bind(this));
     Screen.render();
     
-
-     
-      Screen.setGrid(this.cursor.row,this.cursor.col,this.playerTurn);
-      Screen.setBackgroundColor(this.cursor.row,this.cursor.col,"yellow");
-      this.cursor.setBackgroundColor();
-      
-      Screen.render();
-      Screen.setGrid(this.cursor.row,this.cursor.col,this.playerTurn);
-    
-      
   }
+      placeMove() {
+        let col=this.cursor.col;
+        let row=this.cursor.row;
+        let char=this.playerTurn;
+        Screen.setGrid(row,col,char);
+        Screen.render();
+        if(this.playerTurn==="X"){
 
+          this.playerTurn="O";
+        }else{
+          this.playerTurn="X";
+        }
+        let winner=TTT.checkWin(Screen.grid);
+        if(winner){
+          TTT.endGame(winner);
+        }
+       
+      }
+     
   
+
+
  
 
   static checkWin(grid) {
