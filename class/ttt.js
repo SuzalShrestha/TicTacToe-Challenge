@@ -25,8 +25,10 @@ class TTT {
     Screen.addCommand('return', 'place move', this.placeMove.bind(this));
     Screen.render();
     
+    
   }
       placeMove() {
+        
         let col=this.cursor.col;
         let row=this.cursor.row;
         let char=this.playerTurn;
@@ -42,7 +44,7 @@ class TTT {
         if(winner){
           TTT.endGame(winner);
         }
-       
+       this.cursor.resetBackgroundColor();
       }
      
   
@@ -121,8 +123,8 @@ class TTT {
         
     
       let array=[];
-      for(let i=0;i<3;i++){
-        array.push(grid[i][i]);
+      for(let k=0;k<3;k++){
+        array.push(grid[k][k]);
       }
       
     
@@ -133,10 +135,13 @@ class TTT {
           return "O";
         }
       }
-     let advanceGrid=grid.reverse();
+     let advanceGrid=[];
+     for(let o=2;o>=0;o--){
+      advanceGrid.push(grid[o]);
+     }
       array=[];
-      for(let i=0;i<3;i++){
-        array.push(advanceGrid[i][i]);
+      for(let l=0;l<3;l++){
+        array.push(advanceGrid[l][l]);
       }
       if(checkThreeSame(array)!==undefined){
         if(checkThreeSame(array).indexOf("X")!==-1){
