@@ -11,8 +11,8 @@ class Cursor {
 
     this.gridColor = 'black';
     this.cursorColor = 'yellow';
-    this.setBackgroundColor();
 
+    this.setBackgroundColor();
   }
 
   resetBackgroundColor() {
@@ -26,8 +26,8 @@ class Cursor {
   up() {
     this.resetBackgroundColor();
     // Move cursor up
-    if(this.row>0){
-      this.row+=-1;
+    if (this.row > 0) {
+      this.row += -1;
     }
     this.setBackgroundColor();
   }
@@ -35,8 +35,8 @@ class Cursor {
   down() {
     this.resetBackgroundColor();
     // Move cursor down
-    if(this.row<2){
-    this.row+=1;
+    if (this.row < 2) {
+      this.row += 1;
     }
     this.setBackgroundColor();
   }
@@ -44,8 +44,8 @@ class Cursor {
   left() {
     this.resetBackgroundColor();
     // Move cursor left
-    if(this.col>0){
-      this.col+=-1;
+    if (this.col > 0) {
+      this.col += -1;
     }
     this.setBackgroundColor();
   }
@@ -53,8 +53,8 @@ class Cursor {
   right() {
     this.resetBackgroundColor();
     // Move cursor right
-    if(this.col<2){
-      this.col+=1;
+    if (this.col < 2) {
+      this.col += 1;
     }
     this.setBackgroundColor();
   }
